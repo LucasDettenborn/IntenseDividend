@@ -20,9 +20,28 @@ export default function App() {
     <>
       <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator initialRouteName="PreSignIn">
-          <Stack.Screen options={{headerShown: false}} name="PreSignIn" component={PreSignin} />
-          <Stack.Screen name="SignIn" component={Signin} />
-          <Stack.Screen name="RegisterAccount" component={RegisterAccount} />
+          <Stack.Screen 
+            options={{ 
+              headerShown: false 
+            }} 
+            name="PreSignIn" 
+            component={PreSignin} />
+          <Stack.Screen 
+            options={{ 
+              headerShown: true, 
+              title: 'Login', 
+              headerTintColor: 'white'
+            }} 
+            name="SignIn" 
+            component={Signin} />
+          <Stack.Screen 
+            options={{ 
+              headerShown: true, 
+              title: 'Criar conta', 
+              headerTintColor: 'white' 
+            }} 
+              name="RegisterAccount" 
+              component={RegisterAccount} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

@@ -23,7 +23,7 @@ export const Title = styled.Text`
     font-weight: 700;
     color:#FFFFFF;
     margin-left: 5%;
-    line-height: 54%;
+    line-height: 55%;
 `
 export const ContainerSubTitle = styled.View`
     flex: 0.10;
