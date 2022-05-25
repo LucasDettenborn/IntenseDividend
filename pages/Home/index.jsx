@@ -1,7 +1,7 @@
 import React from 'react';
-import { Image, Text } from 'react-native';
 import { KeyboardView, ScrollView, Container, ButtonSubmit, TextButton } from './styles';
 import AnalysisResult from '../../components/AnalysisResult';
+import HeaderWithSearch from '../../components/HeaderWithSearch';
 
 const NavigationToSignin = props => {
     props.navigation.navigate('SignIn');
@@ -13,11 +13,15 @@ const Home = props => {
             <KeyboardView
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
+                <Container>
+                    <HeaderWithSearch></HeaderWithSearch>
+                </Container>
                 <ScrollView>
                     <AnalysisResult></AnalysisResult>
                     <AnalysisResult></AnalysisResult>
-                    <Text style={{ fontSize: 80 }}>Framework around?</Text>
-                    <Text style={{ fontSize: 80 }}>Framework around?</Text>
+                    <AnalysisResult></AnalysisResult>
+                    <AnalysisResult></AnalysisResult>
+                    <AnalysisResult></AnalysisResult>
                 </ScrollView>
                 <Container>
                     <ButtonSubmit onPress={() => NavigationToSignin(props)}>
