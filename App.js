@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import {
   NavigationContainer,
@@ -7,41 +7,55 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Signin from './pages/Signin';
+import Home from './pages/Home';
 import PreSignin from './pages/PreSignin';
 import RegisterAccount from './pages/RegisterAccount';
+import DatabaseInit from './database/database-init';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  useEffect(() => {
+    new DatabaseInit;
+  });
 
   const scheme = useColorScheme();
 
   return (
     <>
       <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack.Navigator initialRouteName="PreSignIn">
-          <Stack.Screen 
-            options={{ 
-              headerShown: false 
-            }} 
-            name="PreSignIn" 
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            options={{
+              headerShown: false
+            }}
+            name="PreSignIn"
             component={PreSignin} />
-          <Stack.Screen 
-            options={{ 
-              headerShown: true, 
-              title: 'Login', 
+          <Stack.Screen
+            options={{
+              headerShown: true,
+              title: 'Login',
               headerTintColor: 'white'
-            }} 
-            name="SignIn" 
+            }}
+            name="SignIn"
             component={Signin} />
-          <Stack.Screen 
-            options={{ 
-              headerShown: true, 
-              title: 'Criar conta', 
-              headerTintColor: 'white' 
-            }} 
-              name="RegisterAccount" 
-              component={RegisterAccount} />
+          <Stack.Screen
+            options={{
+              headerShown: true,
+              title: 'Home',
+              headerTintColor: 'white'
+            }}
+            name="Home"
+            component={Home} />
+          <Stack.Screen
+            options={{
+              headerShown: true,
+              title: 'Criar conta',
+              headerTintColor: 'white'
+            }}
+            name="RegisterAccount"
+            component={RegisterAccount} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

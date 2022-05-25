@@ -2,8 +2,9 @@ import styled from "styled-components/native";
 
 export const KeyboardView = styled.KeyboardAvoidingView`
     flex: 1;
+    width: 100%;
     align-items: center;
-    justify-content: center ;
+    justify-content: space-around;
 `
 
 export const Container = styled.View`
@@ -19,6 +20,16 @@ export const Title = styled.Text`
     color: red;
     background-color: blue;
     margin-bottom: 5px;
+`
+
+export const Required = styled.Text`
+    align-items: center;
+    justify-content: center ;
+    padding: 0px 12px;
+    width: 90%;
+    font-size: 17px;
+    font-weight: 700;
+    color: red;
 `
 
 export const Input = styled.TextInput`

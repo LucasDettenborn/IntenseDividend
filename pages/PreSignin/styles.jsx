@@ -1,5 +1,11 @@
 import styled from "styled-components/native";
 
+export const KeyboardView = styled.KeyboardAvoidingView`
+    flex: 1;
+    align-items: center;
+    justify-content: center ;
+`
+
 export const ContainerImage = styled.View`
     flex: 1.7;
     align-items: center;
@@ -23,7 +29,7 @@ export const Title = styled.Text`
     font-weight: 700;
     color:#FFFFFF;
     margin-left: 5%;
-    line-height: 55%;
+    line-height: 55px;
 `
 export const ContainerSubTitle = styled.View`
     flex: 0.10;
