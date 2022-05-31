@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { KeyboardView, ScrollView, Container, ButtonSubmit, TextButton } from './styles';
-import AnalysisResult from '../../components/AnalysisResult';
+import AnalysisData from '../../components/AnalysisData';
 
 const NavigationToSignin = props => {
-    props.navigation.navigate('SignIn');
+    props.navigation.navigate('AnalysisResult');
 }
 
 const NewAnalysis = props => {
@@ -14,6 +14,7 @@ const NewAnalysis = props => {
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
                 <ScrollView>
+                    <AnalysisData></AnalysisData>
                     <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
                     <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
                     <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
