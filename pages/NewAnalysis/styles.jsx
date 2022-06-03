@@ -29,10 +29,28 @@ export const ButtonSubmit = styled.TouchableOpacity`
     width: 90%;
     padding: 15px;
 `
+
+export const ContainerForBtnAdd = styled.View`
+    flex: 1;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    padding-right:4%;
+`
+
+export const ButtonAdd = styled.TouchableOpacity`
+    background-color: #49654E;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    width: 65%;
+    padding: 10px;
+`
+
 export const TextButton = styled.Text`
     color: #E4E6D9;
     font-size: 20px ;
-    font-weight: 700 ;
+    font-weight: 600 ;
     
 `
 

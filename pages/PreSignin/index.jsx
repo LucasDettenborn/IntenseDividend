@@ -1,26 +1,34 @@
 import React from 'react';
 import { Image } from 'react-native';
-import { ContainerImage, ContainerTitle, ContainerSubTitle, Container, ButtonSubmit, TextButton, Title, SubTitle } from './styles';
+import {
+    ContainerImage,
+    ContainerTitle,
+    ContainerSubTitle,
+    Container,
+    ButtonSubmit,
+    TextButton,
+    Title,
+    SubTitle,
+} from './styles';
 import BackgroundFirstScreen from '../../assets/preLogin.png';
 
-const NavigationToSignin = props => {
+const NavigationToSignin = (props) => {
     props.navigation.navigate('SignIn');
-}
+};
 
-const PreSignin = props => {
+const PreSignin = (props) => {
     return (
         <>
             <ContainerImage>
-                <Image
-                    source={BackgroundFirstScreen}
-                />
-
+                <Image source={BackgroundFirstScreen} />
             </ContainerImage>
             <ContainerTitle>
-                <Title>Intense{"\n"}Dividend</Title>
+                <Title>Intense{'\n'}Dividend</Title>
             </ContainerTitle>
             <ContainerSubTitle>
-                <SubTitle>Construindo um futuro sólido pela renda passiva</SubTitle>
+                <SubTitle>
+                    Construindo um futuro sólido pela renda passiva
+                </SubTitle>
             </ContainerSubTitle>
             <Container>
                 <ButtonSubmit onPress={() => NavigationToSignin(props)}>
@@ -28,9 +36,7 @@ const PreSignin = props => {
                 </ButtonSubmit>
             </Container>
         </>
-
-
-    )
-}
+    );
+};
 
 export default PreSignin;

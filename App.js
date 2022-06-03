@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Signin from './pages/Signin';
 import Home from './pages/Home';
 import NewAnalysis from './pages/NewAnalysis';
+import AnalysisResult from './pages/AnalysisResult';
 import PreSignin from './pages/PreSignin';
 import RegisterAccount from './pages/RegisterAccount';
 import DatabaseInit from './database/database-init';
@@ -57,6 +58,14 @@ export default function App() {
             }}
             name="NewAnalysis"
             component={NewAnalysis} />
+            <Stack.Screen
+            options={{
+              headerShown: true,
+              title: 'Resultado',
+              headerTintColor: 'white'
+            }}
+            name="AnalysisResult"
+            component={AnalysisResult} />
           <Stack.Screen
             options={{
               headerShown: true,

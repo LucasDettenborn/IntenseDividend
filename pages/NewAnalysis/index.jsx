@@ -1,28 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text } from 'react-native';
-import { KeyboardView, ScrollView, Container, ButtonSubmit, TextButton } from './styles';
-import AnalysisData from '../../components/AnalysisData';
+import { KeyboardView, ScrollView, Container, ContainerForBtnAdd, ButtonSubmit, ButtonAdd, TextButton } from './styles';
+import {AnalysisData} from '../../components/AnalysisData';
 
 const NavigationToSignin = props => {
     props.navigation.navigate('AnalysisResult');
 }
 
 const NewAnalysis = props => {
+    
+    const [data, setData] = useState([
+        {
+          key: 1,
+          regularMarketPrice: 0,
+          symbol: null,
+          dy: 0,
+          py: 0,
+          totalEarnings1: 0,
+          totalEarnings2: 0,
+          totalEarnings3: 0,
+          totalEarnings4: 0,
+          totalEarnings5: 0
+        }
+    ]);
+    const [counter, setCounter] = useState(1);
+    
+    const AddMore = () => {
+        setData([...data, { key: counter + 1, value: 22} ]);
+        setCounter(counter + 1);
+    }
+
+    const RemoveItem = (key) =>{
+        console.log("cheguei => ", key);
+        setData([...data.filter(x => x.key != key)]);
+    }
+
     return (
         <>
             <KeyboardView
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
                 <ScrollView>
-                    <AnalysisData></AnalysisData>
-                    <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
-                    <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
-                    <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
-                    <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
-                    <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
-                    <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
-                    <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
-                    <Text style={{ padding: 10, fontSize: 95}}>TEST</Text>
+                    {data.map((d) => 
+                        <AnalysisData removeItem = {RemoveItem} data = {d}/>
+                    )}
+                    <ContainerForBtnAdd>
+                        <ButtonAdd onPress={() => AddMore()}>
+                            <TextButton> + Adicionar outro
+                            </TextButton>
+                        </ButtonAdd>
+                    </ContainerForBtnAdd>
                 </ScrollView>
                 <Container>
                     <ButtonSubmit onPress={() => NavigationToSignin(props)}>
@@ -33,8 +60,6 @@ const NewAnalysis = props => {
             </KeyboardView>
 
         </>
-
-
     )
 }
 

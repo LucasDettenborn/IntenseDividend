@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import LottieView from 'lottie-react-native';
 
 export const ContainerAround = styled.View`
     flex: 1;
@@ -17,6 +18,11 @@ export const Container = styled.View`
     height: 100%;
     border-radius: 10px;
     background-color: #FFFFFF;   
+`
+export const LottieViewAnimation = styled(LottieView)`
+  background: transparent;
+  width: 200px;
+  height: 200px;
 `
 
 export const ContainerHeaderCol1 = styled.View`
@@ -81,4 +87,22 @@ export const Divider = styled.View`
     background-color: #253528;
     margin-top: 3%;
     margin-bottom: 3%;
+`
+
+export const ContainerForBtnRemove = styled.View`
+    flex: 1;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    padding-right:4%;
+    padding-bottom: 2%;
+`
+
+export const ButtonRemove = styled.TouchableOpacity`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    width: 15%;
+    padding: 10px;
 `
