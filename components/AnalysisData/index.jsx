@@ -22,10 +22,10 @@ function AnalysisData({ removeItem, data }) {
     const [isLoading, setLoading] = useState(false);
     const [ticketRequired, setTicketRequired] = useState(null);
     const [searchTicketOk, setSearchTicketOk] = useState(null);
-    const [searchTicketData, setSearchTicketData] = useState(null);
     const [textForSearch, setTextForSearch] = useState(null);
     const [regularMarketPrice, setRegularMarketPrice] = useState(0);
     const [symbol, setSymbol] = useState(null);
+    const [shortName, setShortName] = useState(null);
 
     useEffect(() => {
         CheckSearchTicketExists();
@@ -35,6 +35,9 @@ function AnalysisData({ removeItem, data }) {
         if (symbol != null) {
             setLoading(false);
             setSearchTicketOk(symbol.toUpperCase());
+            data.regularMarketPrice = regularMarketPrice;
+            data.symbol = symbol.toUpperCase();
+            data.shortName = shortName;
         }
     }, [symbol]);
 
@@ -53,7 +56,6 @@ function AnalysisData({ removeItem, data }) {
                         `quote?region=${'US'}&lang=${'en'}&symbols=${symbolToSearch}`
                     )
                     .then(function (response) {
-                        console.log('\n\n');
                         if (response != null && response != undefined) {
                             setRegularMarketPrice(
                                 response.data.quoteResponse.result[0]
@@ -61,6 +63,9 @@ function AnalysisData({ removeItem, data }) {
                             );
                             setSymbol(
                                 response.data.quoteResponse.result[0].symbol
+                            );
+                            setShortName(
+                                response.data.quoteResponse.result[0].shortName
                             );
                         } else {
                             console.error(error);
@@ -105,49 +110,68 @@ function AnalysisData({ removeItem, data }) {
                         </Row>
                         <MaterialInput
                             titleField={'DY'}
-                            returnText={setTextForSearch}
+                            returnText={(text) => (data.dy = text)}
                             placeholderText={'Digite em formato de porcentagem'}
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Payout'}
-                            returnText={setTextForSearch}
+                            returnText={(e) => (data.py = e)}
                             placeholderText={'Digite em formato de porcentagem'}
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2017'}
-                            returnText={setTextForSearch}
+                            returnText={(e) => (data.totalEarnings1 = e)}
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2018'}
-                            returnText={setTextForSearch}
+                            returnText={(e) => (data.totalEarnings2 = e)}
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2019'}
-                            returnText={setTextForSearch}
+                            returnText={(e) => (data.totalEarnings3 = e)}
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2020'}
-                            returnText={setTextForSearch}
+                            returnText={(e) => (data.totalEarnings4 = e)}
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2021'}
-                            returnText={setTextForSearch}
+                            returnText={(e) => (data.totalEarnings5 = e)}
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
                         ></MaterialInput>
+                        {data.key != 1 ? (
+                            <ContainerForBtnRemove>
+                                <ButtonRemove
+                                    onPress={() => removeItem(data.key)}
+                                >
+                                    <Image
+                                        style={{
+                                            width: '50%',
+                                            height: '100%',
+                                            flex: 1,
+                                            resizeMosde: 'contain',
+                                        }}
+                                        source={RemoveIcon}
+                                    />
+                                </ButtonRemove>
+                            </ContainerForBtnRemove>
+                        ) : (
+                            <></>
+                        )}
                     </Container>
                 ) : isLoading == false ? (
                     <Container>
@@ -168,7 +192,7 @@ function AnalysisData({ removeItem, data }) {
                                             width: '50%',
                                             height: '100%',
                                             flex: 1,
-                                            resizeMode: 'contain',
+                                            resizeMosde: 'contain',
                                         }}
                                         source={RemoveIcon}
                                     />

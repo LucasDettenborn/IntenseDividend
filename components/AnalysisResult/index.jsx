@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image } from 'react-native';
 import {
     Container,
     Row,
@@ -15,9 +15,50 @@ import {
     ContainerHeaderCol1,
     ContainerHeaderCol2,
 } from './styles';
-import AccountIcon from '../../assets/event_black_24dp.png';
+import CalendarIcon from '../../assets/event_black_24dp.png';
 
-const AnalysisResult = (props) => {
+function AnalysisResult({ dateReport, data }) {
+    const [targetDividendFromUser, setTargetDividendFromUser] = useState(6);
+    const [dividendValuation, setDividendValuation] = useState(null);
+    const [scoreRecommendationSystem, setScoreRecommendationSystem] =
+        useState(null);
+
+    useEffect(() => {
+        console.log(
+            '\n\nValor do dividendValuation',
+            dividendValuation,
+            '\n\n'
+        );
+    }, [dividendValuation]);
+
+    console.log('aqui', dividendValuation);
+
+    const MathDividendValuation = (te1, te2, te3, te4, te5) => {
+        console.log(
+            '\n\nvalores:\n',
+            te1,
+            ' - ',
+            te2,
+            ' - ',
+            te3,
+            ' - ',
+            te4,
+            ' - ',
+            te5
+        );
+        //Fazer a média dos proventos
+        let average = (te1 + te2 + te3 + te4 + te5) / 5;
+        //Deve-se dividir a média pelo alvo requirido no cadastro do usuário * 100
+        setDividendValuation((average / targetDividendFromUser) * 100);
+    };
+
+    const MathScoreRecommendationSystem = (dy, py) => {
+        //Aplicar aqui o que está no Excel
+        setScoreRecommendationSystem(
+            dy * 0.15 + py * 0.05 + dividendValuation * 0.8
+        );
+    };
+
     return (
         <>
             <ContainerAround
@@ -36,18 +77,16 @@ const AnalysisResult = (props) => {
                         <BoxImage>
                             <Image
                                 style={{
-                                    width: '50%',
-                                    height: '50%',
+                                    width: '60%',
+                                    height: '60%',
                                     flex: 1,
                                     resizeMode: 'contain',
                                 }}
-                                source={AccountIcon}
+                                source={CalendarIcon}
                             />
                         </BoxImage>
                         <BoxDate>
-                            <TextDate style={{ fontSize: 15 }}>
-                                10/03/2022
-                            </TextDate>
+                            <TextDate>{dateReport}</TextDate>
                         </BoxDate>
                     </Row>
                     <Divider></Divider>
@@ -69,24 +108,50 @@ const AnalysisResult = (props) => {
                             <TextHeader>Nota</TextHeader>
                         </ContainerHeaderCol2>
                     </Row>
-
                     <Row style={{ height: '35%' }}>
-                        <ContainerHeaderCol1 style={{ height: 'auto' }}>
-                            <TextAfterHeader style={{ fontSize: 15 }}>
-                                ITSA4
-                            </TextAfterHeader>
-                        </ContainerHeaderCol1>
-                        <ContainerHeaderCol2 style={{ height: 'auto' }}>
-                            <TextAfterHeader>8%</TextAfterHeader>
-                            <TextAfterHeader>75%</TextAfterHeader>
-                            <TextAfterHeader>R$10,80</TextAfterHeader>
-                            <TextAfterHeader>4.7</TextAfterHeader>
-                        </ContainerHeaderCol2>
+                        {data != null && data != 'undefined' && (
+                            <>
+                                <ContainerHeaderCol1 style={{ height: 'auto' }}>
+                                    <TextAfterHeader style={{ fontSize: 15 }}>
+                                        {data.symbol}
+                                    </TextAfterHeader>
+                                </ContainerHeaderCol1>
+                                <ContainerHeaderCol2 style={{ height: 'auto' }}>
+                                    <TextAfterHeader>
+                                        {data.dy}%
+                                    </TextAfterHeader>
+                                    <TextAfterHeader>
+                                        {data.py}%
+                                    </TextAfterHeader>
+                                    <TextAfterHeader>
+                                        {MathDividendValuation(
+                                            data.totalEarnings1,
+                                            data.totalEarnings2,
+                                            data.totalEarnings3,
+                                            data.totalEarnings4,
+                                            data.totalEarnings5
+                                        )}
+                                    </TextAfterHeader>
+                                    <TextAfterHeader>
+                                        {dividendValuation != null &&
+                                        scoreRecommendationSystem != null
+                                            ? scoreRecommendationSystem
+                                            : dividendValuation != null
+                                            ? MathScoreRecommendationSystem(
+                                                  data.dy,
+                                                  data.py,
+                                                  dividendValuation
+                                              )
+                                            : 'wait...'}
+                                    </TextAfterHeader>
+                                </ContainerHeaderCol2>
+                            </>
+                        )}
                     </Row>
                 </Container>
             </ContainerAround>
         </>
     );
-};
+}
 
-export default AnalysisResult;
+export { AnalysisResult };

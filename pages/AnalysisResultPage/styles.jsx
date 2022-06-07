@@ -21,6 +21,11 @@ export const Container = styled.View`
     width: 100%;
 `;
 
+export const ContainerSpaceBottom = styled.View`
+    height: 5%;
+    width: 100%;
+`;
+
 export const ButtonSubmit = styled.TouchableOpacity`
     background-color: #253528;
     align-items: center;
@@ -28,23 +33,6 @@ export const ButtonSubmit = styled.TouchableOpacity`
     border-radius: 9px;
     width: 90%;
     padding: 15px;
-`;
-
-export const ContainerForBtnAdd = styled.View`
-    flex: 1;
-    align-items: flex-end;
-    justify-content: center;
-    width: 100%;
-    padding-right: 4%;
-`;
-
-export const ButtonAdd = styled.TouchableOpacity`
-    background-color: #49654e;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9px;
-    width: 65%;
-    padding: 10px;
 `;
 
 export const TextButton = styled.Text`
