@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-native';
 import {
     Container,
@@ -16,6 +16,7 @@ import {
     ContainerHeaderCol2,
 } from './styles';
 import CalendarIcon from '../../assets/event_black_24dp.png';
+import Helper from '../../util/Helper';
 
 function AnalysisResult({ dateReport, data }) {
     const [targetDividendFromUser, setTargetDividendFromUser] = useState(6);
@@ -23,40 +24,29 @@ function AnalysisResult({ dateReport, data }) {
     const [scoreRecommendationSystem, setScoreRecommendationSystem] =
         useState(null);
 
-    useEffect(() => {
-        console.log(
-            '\n\nValor do dividendValuation',
-            dividendValuation,
-            '\n\n'
-        );
-    }, [dividendValuation]);
-
-    console.log('aqui', dividendValuation);
-
     const MathDividendValuation = (te1, te2, te3, te4, te5) => {
-        console.log(
-            '\n\nvalores:\n',
-            te1,
-            ' - ',
-            te2,
-            ' - ',
-            te3,
-            ' - ',
-            te4,
-            ' - ',
-            te5
-        );
         //Fazer a média dos proventos
-        let average = (te1 + te2 + te3 + te4 + te5) / 5;
+        let average =
+            (parseFloat(te1) +
+                parseFloat(te2) +
+                parseFloat(te3) +
+                parseFloat(te4) +
+                parseFloat(te5)) /
+            5;
         //Deve-se dividir a média pelo alvo requirido no cadastro do usuário * 100
-        setDividendValuation((average / targetDividendFromUser) * 100);
+        setDividendValuation(
+            ((average / targetDividendFromUser) * 100).toFixed(2)
+        );
     };
 
     const MathScoreRecommendationSystem = (dy, py) => {
         //Aplicar aqui o que está no Excel
-        setScoreRecommendationSystem(
-            dy * 0.15 + py * 0.05 + dividendValuation * 0.8
-        );
+        let dyWeight = parseFloat(Helper.dividendYieldConvertWeight(dy)) * 0.15;
+        let pyWeight = parseInt(Helper.payOutConvertWeight(py)) * 0.05;
+        let divValuationWeight =
+            Helper.dividendValuationConvertWeight(dividendValuation) * 0.8;
+        let result = dyWeight + pyWeight + divValuationWeight;
+        setScoreRecommendationSystem(result.toFixed(2));
     };
 
     return (
@@ -124,25 +114,26 @@ function AnalysisResult({ dateReport, data }) {
                                         {data.py}%
                                     </TextAfterHeader>
                                     <TextAfterHeader>
-                                        {MathDividendValuation(
-                                            data.totalEarnings1,
-                                            data.totalEarnings2,
-                                            data.totalEarnings3,
-                                            data.totalEarnings4,
-                                            data.totalEarnings5
-                                        )}
+                                        R$:
+                                        {dividendValuation == null
+                                            ? MathDividendValuation(
+                                                  data.totalEarnings1,
+                                                  data.totalEarnings2,
+                                                  data.totalEarnings3,
+                                                  data.totalEarnings4,
+                                                  data.totalEarnings5
+                                              )
+                                            : dividendValuation}
                                     </TextAfterHeader>
                                     <TextAfterHeader>
                                         {dividendValuation != null &&
-                                        scoreRecommendationSystem != null
-                                            ? scoreRecommendationSystem
-                                            : dividendValuation != null
+                                        scoreRecommendationSystem == null
                                             ? MathScoreRecommendationSystem(
                                                   data.dy,
                                                   data.py,
                                                   dividendValuation
                                               )
-                                            : 'wait...'}
+                                            : scoreRecommendationSystem}
                                     </TextAfterHeader>
                                 </ContainerHeaderCol2>
                             </>

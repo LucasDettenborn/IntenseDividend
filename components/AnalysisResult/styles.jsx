@@ -21,7 +21,7 @@ export const Container = styled.View`
 `;
 
 export const ContainerHeaderCol1 = styled.View`
-    flex: 1;
+    flex: 0.5;
 `;
 export const ContainerHeaderCol2 = styled.View`
     flex: 1;
