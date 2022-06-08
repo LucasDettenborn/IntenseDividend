@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     KeyboardView,
     ScrollView,
@@ -17,7 +17,7 @@ const NavigationToHome = () => {
 
 export default function AnalysisResultPage({ route }) {
     const { dataToAnalysis } = route.params;
-    const { reportDate } = new Date();
+    const [reportDate, setReportDate] = useState(new Date());
 
     const saveDividendAnalysisResult = () => {
         //Primeiro cria o dado na tabela agrupador, depois o dados na tabela de baixo
@@ -39,7 +39,7 @@ export default function AnalysisResultPage({ route }) {
                                         responseDAR != undefined
                                     ) {
                                         alert(successSaveMessage);
-                                        () => NavigationToHome(props);
+                                        //() => NavigationToHome(props);
                                     } else {
                                         alert(errorSaveMessage);
                                     }
@@ -58,7 +58,7 @@ export default function AnalysisResultPage({ route }) {
                 behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
             >
                 <ScrollView>
-                    {dataToAnalysis != null ? (
+                    {dataToAnalysis != null && reportDate != null ? (
                         dataToAnalysis.map((d) => (
                             <AnalysisResult dateReport={reportDate} data={d} />
                         ))

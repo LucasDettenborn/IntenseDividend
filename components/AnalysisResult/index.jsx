@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image } from 'react-native';
 import {
     Container,
@@ -17,9 +17,23 @@ import {
 } from './styles';
 import CalendarIcon from '../../assets/event_black_24dp.png';
 import Helper from '../../util/Helper';
+import moment from 'moment';
 
 function AnalysisResult({ dateReport, data }) {
     const [targetDividendFromUser, setTargetDividendFromUser] = useState(6);
+    const [dividendValuation, setDividendValuation] = useState(
+        data.dividendValuation
+    );
+    const [scoreFromRecomendationSystem, setScoreFromRecomendationSystem] =
+        useState(data.scoreFromRecomendationSystem);
+
+    useEffect(() => {
+        data.dividendValuation = dividendValuation;
+    }, [dividendValuation]);
+
+    useEffect(() => {
+        data.scoreFromRecomendationSystem = scoreFromRecomendationSystem;
+    }, [scoreFromRecomendationSystem]);
 
     const MathDividendValuation = (te1, te2, te3, te4, te5) => {
         //Fazer a média dos proventos
@@ -31,10 +45,9 @@ function AnalysisResult({ dateReport, data }) {
                 parseFloat(te5)) /
             5;
         //Deve-se dividir a média pelo alvo requirido no cadastro do usuário * 100
-        data.dividendValuation = (
-            (average / targetDividendFromUser) *
-            100
-        ).toFixed(2);
+        setDividendValuation(
+            ((average / targetDividendFromUser) * 100).toFixed(2)
+        );
     };
 
     const MathScoreRecommendationSystem = (dy, py, dv) => {
@@ -44,7 +57,7 @@ function AnalysisResult({ dateReport, data }) {
         let divValuationWeight =
             Helper.dividendValuationConvertWeight(dv) * 0.8;
         let result = dyWeight + pyWeight + divValuationWeight;
-        data.scoreFromRecomendationSystem = result.toFixed(2);
+        setScoreFromRecomendationSystem(result.toFixed(2));
     };
 
     return (
@@ -74,7 +87,11 @@ function AnalysisResult({ dateReport, data }) {
                             />
                         </BoxImage>
                         <BoxDate>
-                            <TextDate>{dateReport}</TextDate>
+                            <TextDate>
+                                {moment(dateReport)
+                                    .format('DD-MM-YYYY')
+                                    .toString()}
+                            </TextDate>
                         </BoxDate>
                     </Row>
                     <Divider></Divider>
@@ -113,7 +130,7 @@ function AnalysisResult({ dateReport, data }) {
                                     </TextAfterHeader>
                                     <TextAfterHeader>
                                         R$:
-                                        {data.dividendValuation == 0
+                                        {dividendValuation == 0
                                             ? MathDividendValuation(
                                                   data.totalEarnings1,
                                                   data.totalEarnings2,
@@ -121,17 +138,17 @@ function AnalysisResult({ dateReport, data }) {
                                                   data.totalEarnings4,
                                                   data.totalEarnings5
                                               )
-                                            : data.dividendValuation}
+                                            : dividendValuation}
                                     </TextAfterHeader>
                                     <TextAfterHeader>
-                                        {data.dividendValuation > 0 &&
-                                        data.scoreFromRecomendationSystem == 0
+                                        {dividendValuation > 0 &&
+                                        scoreFromRecomendationSystem == 0
                                             ? MathScoreRecommendationSystem(
                                                   data.dy,
                                                   data.py,
-                                                  data.dividendValuation
+                                                  dividendValuation
                                               )
-                                            : data.scoreFromRecomendationSystem}
+                                            : scoreFromRecomendationSystem}
                                     </TextAfterHeader>
                                 </ContainerHeaderCol2>
                             </>

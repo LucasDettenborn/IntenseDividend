@@ -39,7 +39,29 @@ const NewAnalysis = (props) => {
         setData([...data.filter((x) => x.key != key)]);
     };
 
+    const FormaterDoubleValue = async () => {
+        try {
+            await Promise.all(
+                data.map(
+                    (d) => (
+                        (d.dy = d.dy.replace(',', '.')),
+                        (d.py = d.py.replace(',', '.')),
+                        (d.totalEarnings1 = d.totalEarnings1.replace(',', '.')),
+                        (d.totalEarnings2 = d.totalEarnings2.replace(',', '.')),
+                        (d.totalEarnings3 = d.totalEarnings3.replace(',', '.')),
+                        (d.totalEarnings4 = d.totalEarnings4.replace(',', '.')),
+                        (d.totalEarnings5 = d.totalEarnings5.replace(',', '.'))
+                    )
+                )
+            );
+        } catch (error) {
+            alert('Problemas encontrados');
+        }
+    };
+
     const NavigationToAnalysisResultPage = (props) => {
+        //Ajusta os dados pra que vírgula vire ponto
+        FormaterDoubleValue();
         props.navigation.navigate('AnalysisResultPage', {
             dataToAnalysis: data,
         });
