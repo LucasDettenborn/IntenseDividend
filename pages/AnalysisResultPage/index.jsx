@@ -8,6 +8,8 @@ import {
     TextButton,
 } from './styles';
 import { AnalysisResult } from '../../components/AnalysisResult';
+import DividendAnalysis from '../../services/DividendAnalysis';
+import DividendAnalysisResult from '../../services/DividendAnalysisResult';
 
 const NavigationToHome = () => {
     navigation.navigate('Home');
@@ -15,6 +17,41 @@ const NavigationToHome = () => {
 
 export default function AnalysisResultPage({ route }) {
     const { dataToAnalysis } = route.params;
+    const { reportDate } = new Date();
+
+    const saveDividendAnalysisResult = () => {
+        //Primeiro cria o dado na tabela agrupador, depois o dados na tabela de baixo
+        let successSaveMessage = 'Os dados foram salvos com sucesso';
+        let errorSaveMessage = 'Não foi possível salvar os dados da análise';
+
+        if (dataToAnalysis != null && dataToAnalysis != undefined) {
+            dataToAnalysis.map((d) =>
+                DividendAnalysis.create({ reportDate })
+                    .then(function (responseDA) {
+                        if (responseDA != null && responseDA != undefined) {
+                            DividendAnalysisResult.create({
+                                d,
+                                responseDA,
+                            })
+                                .then(function (responseDAR) {
+                                    if (
+                                        responseDAR != null &&
+                                        responseDAR != undefined
+                                    ) {
+                                        alert(successSaveMessage);
+                                        () => NavigationToHome(props);
+                                    } else {
+                                        alert(errorSaveMessage);
+                                    }
+                                })
+                                .catch(() => alert(errorSaveMessage));
+                        }
+                    })
+                    .catch(() => alert(errorSaveMessage))
+            );
+        }
+    };
+
     return (
         <>
             <KeyboardView
@@ -23,10 +60,7 @@ export default function AnalysisResultPage({ route }) {
                 <ScrollView>
                     {dataToAnalysis != null ? (
                         dataToAnalysis.map((d) => (
-                            <AnalysisResult
-                                dateReport={'06/06/2022'}
-                                data={d}
-                            />
+                            <AnalysisResult dateReport={reportDate} data={d} />
                         ))
                     ) : (
                         <TextButton>Não tem dados a ser carregado</TextButton>
@@ -34,7 +68,9 @@ export default function AnalysisResultPage({ route }) {
                     <ContainerSpaceBottom />
                 </ScrollView>
                 <Container>
-                    <ButtonSubmit onPress={() => NavigationToHome(props)}>
+                    <ButtonSubmit
+                        onPress={() => saveDividendAnalysisResult(props)}
+                    >
                         <TextButton>Finalizar análise</TextButton>
                     </ButtonSubmit>
                 </Container>

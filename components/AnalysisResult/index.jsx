@@ -20,9 +20,6 @@ import Helper from '../../util/Helper';
 
 function AnalysisResult({ dateReport, data }) {
     const [targetDividendFromUser, setTargetDividendFromUser] = useState(6);
-    const [dividendValuation, setDividendValuation] = useState(null);
-    const [scoreRecommendationSystem, setScoreRecommendationSystem] =
-        useState(null);
 
     const MathDividendValuation = (te1, te2, te3, te4, te5) => {
         //Fazer a média dos proventos
@@ -34,19 +31,20 @@ function AnalysisResult({ dateReport, data }) {
                 parseFloat(te5)) /
             5;
         //Deve-se dividir a média pelo alvo requirido no cadastro do usuário * 100
-        setDividendValuation(
-            ((average / targetDividendFromUser) * 100).toFixed(2)
-        );
+        data.dividendValuation = (
+            (average / targetDividendFromUser) *
+            100
+        ).toFixed(2);
     };
 
-    const MathScoreRecommendationSystem = (dy, py) => {
+    const MathScoreRecommendationSystem = (dy, py, dv) => {
         //Aplicar aqui o que está no Excel
         let dyWeight = parseFloat(Helper.dividendYieldConvertWeight(dy)) * 0.15;
         let pyWeight = parseInt(Helper.payOutConvertWeight(py)) * 0.05;
         let divValuationWeight =
-            Helper.dividendValuationConvertWeight(dividendValuation) * 0.8;
+            Helper.dividendValuationConvertWeight(dv) * 0.8;
         let result = dyWeight + pyWeight + divValuationWeight;
-        setScoreRecommendationSystem(result.toFixed(2));
+        data.scoreFromRecomendationSystem = result.toFixed(2);
     };
 
     return (
@@ -115,7 +113,7 @@ function AnalysisResult({ dateReport, data }) {
                                     </TextAfterHeader>
                                     <TextAfterHeader>
                                         R$:
-                                        {dividendValuation == null
+                                        {data.dividendValuation == 0
                                             ? MathDividendValuation(
                                                   data.totalEarnings1,
                                                   data.totalEarnings2,
@@ -123,17 +121,17 @@ function AnalysisResult({ dateReport, data }) {
                                                   data.totalEarnings4,
                                                   data.totalEarnings5
                                               )
-                                            : dividendValuation}
+                                            : data.dividendValuation}
                                     </TextAfterHeader>
                                     <TextAfterHeader>
-                                        {dividendValuation != null &&
-                                        scoreRecommendationSystem == null
+                                        {data.dividendValuation > 0 &&
+                                        data.scoreFromRecomendationSystem == 0
                                             ? MathScoreRecommendationSystem(
                                                   data.dy,
                                                   data.py,
-                                                  dividendValuation
+                                                  data.dividendValuation
                                               )
-                                            : scoreRecommendationSystem}
+                                            : data.scoreFromRecomendationSystem}
                                     </TextAfterHeader>
                                 </ContainerHeaderCol2>
                             </>

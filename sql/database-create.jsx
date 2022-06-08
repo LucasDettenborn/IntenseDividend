@@ -1,16 +1,23 @@
 export default [
-    `DROP TABLE IF EXISTS users;`,
+    `DROP TABLE IF EXISTS Users;`,
+    `DROP TABLE IF EXISTS DividendAnalysis;`,
+    `DROP TABLE IF EXISTS DividendAnalysisResult;`,
 
     `Create Table if not exists Users (
-            id integer primary key AUTOINCREMENT,
-            username NVARCHAR(100),
-            email NVARCHAR(150),
-            password NVARCHAR(20),
-            dividendGoal INT default 0
+        id INTEGER primary key AUTOINCREMENT,
+        username NVARCHAR(100),
+        email NVARCHAR(150),
+        password NVARCHAR(20),
+        dividendGoal INT default 0
+    );`,
+
+    `Create Table if not exists DividendAnalysis (
+        id INTEGER primary key AUTOINCREMENT,
+        reportDate DATETIME,
     );`,
 
     `Create Table if not exists DividendAnalysisResult (
-        id integer primary key AUTOINCREMENT,
+        id INTEGER primary key AUTOINCREMENT,
         regularMarketPrice DOUBLE default 0.0,
         symbol NVARCHAR(10),
         shortName NVARCHAR(250),
@@ -23,5 +30,7 @@ export default [
         totalEarnings5 DOUBLE default 0.0,
         dividendValuation DOUBLE default 0.0,
         scoreFromRecomendationSystem DOUBLE default 0.0
+        dividendAnalysis_id INTEGER
+        FOREIGN KEY (dividendAnalysis_id) REFERENCES DividendAnalysis(id)
     );`,
 ];

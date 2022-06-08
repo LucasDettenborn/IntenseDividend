@@ -24,6 +24,8 @@ const NewAnalysis = (props) => {
             totalEarnings3: 0,
             totalEarnings4: 0,
             totalEarnings5: 0,
+            dividendValuation: 0,
+            scoreFromRecomendationSystem: 0,
         },
     ]);
     const [counter, setCounter] = useState(1);

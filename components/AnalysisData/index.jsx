@@ -26,6 +26,7 @@ function AnalysisData({ removeItem, data }) {
     const [regularMarketPrice, setRegularMarketPrice] = useState(0);
     const [symbol, setSymbol] = useState(null);
     const [shortName, setShortName] = useState(null);
+    const [keyboardType, setKeyboardType] = useState('decimal-pad');
 
     useEffect(() => {
         CheckSearchTicketExists();
@@ -112,11 +113,15 @@ function AnalysisData({ removeItem, data }) {
                             titleField={'DY'}
                             returnText={(text) => (data.dy = text)}
                             placeholderText={'Digite em formato de porcentagem'}
+                            keyboardType={keyboardType}
+                            maxLength={4}
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Payout'}
                             returnText={(e) => (data.py = e)}
                             placeholderText={'Digite em formato de porcentagem'}
+                            keyboardType={keyboardType}
+                            maxLength={2}
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2017'}
@@ -124,6 +129,8 @@ function AnalysisData({ removeItem, data }) {
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
+                            keyboardType={keyboardType}
+                            maxLength={6}
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2018'}
@@ -131,6 +138,8 @@ function AnalysisData({ removeItem, data }) {
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
+                            keyboardType={keyboardType}
+                            maxLength={6}
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2019'}
@@ -138,6 +147,8 @@ function AnalysisData({ removeItem, data }) {
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
+                            keyboardType={keyboardType}
+                            maxLength={6}
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2020'}
@@ -145,6 +156,8 @@ function AnalysisData({ removeItem, data }) {
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
+                            keyboardType={keyboardType}
+                            maxLength={6}
                         ></MaterialInput>
                         <MaterialInput
                             titleField={'Total de proventos pago em 2021'}
@@ -152,6 +165,8 @@ function AnalysisData({ removeItem, data }) {
                             placeholderText={
                                 'Total pago no ano de JCP ou Dividendo'
                             }
+                            keyboardType={keyboardType}
+                            maxLength={6}
                         ></MaterialInput>
                         {data.key != 1 ? (
                             <ContainerForBtnRemove>

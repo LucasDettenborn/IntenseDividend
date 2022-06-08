@@ -22,8 +22,8 @@ export const Container = styled.View`
 
 export const LottieViewAnimation = styled(LottieView)`
     background: transparent;
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
 `;
 
 export const ContainerHeaderCol1 = styled.View`

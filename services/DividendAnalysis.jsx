@@ -1,6 +1,6 @@
 import { DatabaseConnection } from '../database/database-connection';
 
-const table = 'DividendAnalysisResult';
+const table = 'DividendAnalysis';
 const db = DatabaseConnection.getConnection();
 
 /**
@@ -15,22 +15,8 @@ const create = (obj) => {
         db.transaction((tx) => {
             //comando SQL modificável
             tx.executeSql(
-                `INSERT INTO ${table} (regularMarketPrice, symbol, shortName, dy, py, totalEarnings1, totalEarnings2, totalEarnings3, totalEarnings4, totalEarnings5, dividendValuation, scoreFromRecomendationSystem, dividendAnalysis_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-                [
-                    obj.regularMarketPrice,
-                    obj.symbol,
-                    obj.shortName,
-                    obj.dy,
-                    obj.py,
-                    obj.totalEarnings1,
-                    obj.totalEarnings2,
-                    obj.totalEarnings3,
-                    obj.totalEarnings4,
-                    obj.totalEarnings5,
-                    obj.dividendValuation,
-                    obj.scoreFromRecomendationSystem,
-                    obj.dividendAnalysis_id
-                ],
+                `INSERT INTO ${table} (reportDate) values (?);`,
+                [obj.reportDate],
                 //-----------------------
                 (_, { rowsAffected, insertId }) => {
                     if (rowsAffected > 0) resolve(insertId);
@@ -54,21 +40,8 @@ const update = (id, obj) => {
         db.transaction((tx) => {
             //comando SQL modificável
             tx.executeSql(
-                `UPDATE ${table} SET regularMarketPrice=?, symbol=?, shortName=?, dy=?, py=?, totalEarnings1=?, totalEarnings2=?, totalEarnings3=?, totalEarnings4=?, totalEarnings5=?, dividendValuation=?, scoreFromRecomendationSystem=? WHERE id=?;`,
-                [
-                    obj.regularMarketPrice,
-                    obj.symbol,
-                    obj.shortName,
-                    obj.dy,
-                    obj.py,
-                    obj.totalEarnings1,
-                    obj.totalEarnings2,
-                    obj.totalEarnings3,
-                    obj.totalEarnings4,
-                    obj.totalEarnings5,
-                    obj.dividendValuation,
-                    obj.scoreFromRecomendationSystem,
-                ],
+                `UPDATE ${table} SET reportDate=? WHERE id=?;`,
+                [obj.reportDate],
                 //-----------------------
                 (_, { rowsAffected }) => {
                     if (rowsAffected > 0) resolve(rowsAffected);
