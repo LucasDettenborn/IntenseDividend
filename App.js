@@ -16,11 +16,9 @@ import DatabaseInit from './database/database-init';
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
-    useEffect(() => {
-        new DatabaseInit();
-    });
+new DatabaseInit();
 
+export default function App() {
     const scheme = useColorScheme();
 
     return (
@@ -28,7 +26,7 @@ export default function App() {
             <NavigationContainer
                 theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
             >
-                <Stack.Navigator initialRouteName="NewAnalysis">
+                <Stack.Navigator initialRouteName="PreSignIn">
                     <Stack.Screen
                         options={{
                             headerShown: false,

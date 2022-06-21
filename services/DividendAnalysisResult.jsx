@@ -17,19 +17,19 @@ const create = (obj) => {
             tx.executeSql(
                 `INSERT INTO ${table} (regularMarketPrice, symbol, shortName, dy, py, totalEarnings1, totalEarnings2, totalEarnings3, totalEarnings4, totalEarnings5, dividendValuation, scoreFromRecomendationSystem, dividendAnalysis_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
                 [
-                    obj.regularMarketPrice,
-                    obj.symbol,
-                    obj.shortName,
-                    obj.dy,
-                    obj.py,
-                    obj.totalEarnings1,
-                    obj.totalEarnings2,
-                    obj.totalEarnings3,
-                    obj.totalEarnings4,
-                    obj.totalEarnings5,
-                    obj.dividendValuation,
-                    obj.scoreFromRecomendationSystem,
-                    obj.dividendAnalysis_id
+                    obj.d.regularMarketPrice,
+                    obj.d.symbol,
+                    obj.d.shortName,
+                    obj.d.dy,
+                    obj.d.py,
+                    obj.d.totalEarnings1,
+                    obj.d.totalEarnings2,
+                    obj.d.totalEarnings3,
+                    obj.d.totalEarnings4,
+                    obj.d.totalEarnings5,
+                    obj.d.dividendValuation,
+                    obj.d.scoreFromRecomendationSystem,
+                    obj.responseDA,
                 ],
                 //-----------------------
                 (_, { rowsAffected, insertId }) => {

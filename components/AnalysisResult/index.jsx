@@ -20,6 +20,8 @@ import Helper from '../../util/Helper';
 import moment from 'moment';
 
 function AnalysisResult({ dateReport, data }) {
+    console.log('\n\n\nCHEGUEI AQUI => ', data);
+
     const [targetDividendFromUser, setTargetDividendFromUser] = useState(6);
     const [dividendValuation, setDividendValuation] = useState(
         data.dividendValuation

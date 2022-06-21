@@ -1,4 +1,5 @@
 import { DatabaseConnection } from '../database/database-connection';
+import moment from 'moment';
 
 const table = 'DividendAnalysis';
 const db = DatabaseConnection.getConnection();
@@ -16,7 +17,7 @@ const create = (obj) => {
             //comando SQL modificável
             tx.executeSql(
                 `INSERT INTO ${table} (reportDate) values (?);`,
-                [obj.reportDate],
+                [moment(obj.reportDate).format('DD/MM/YYYY HH:mm:ss')],
                 //-----------------------
                 (_, { rowsAffected, insertId }) => {
                     if (rowsAffected > 0) resolve(insertId);
@@ -69,8 +70,9 @@ const find = (id) => {
                 [id],
                 //-----------------------
                 (_, { rows }) => {
-                    if (rows.length > 0) resolve(rows._array[0]);
-                    else reject('Obj not found: id=' + id); // nenhum registro encontrado
+                    if (rows.length > 0) {
+                        resolve(rows._array[0]);
+                    } else reject('Obj not found: id=' + id); // nenhum registro encontrado
                 },
                 (_, error) => reject(error) // erro interno em tx.executeSql
             );

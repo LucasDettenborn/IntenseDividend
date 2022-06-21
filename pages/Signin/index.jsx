@@ -38,6 +38,7 @@ const Signin = (props) => {
             passwordRequired == null &&
             password != null
         ) {
+            //É necessário aumentar o then para quando logar setar a meta em dividend do usuário
             Users.findUserByLoginAndPassword({ email, password })
                 .then(() => NavigationToHome(props))
                 .catch(() => alert('Usuário não encontrado!'));

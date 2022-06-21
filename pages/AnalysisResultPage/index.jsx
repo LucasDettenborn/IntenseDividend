@@ -11,18 +11,19 @@ import { AnalysisResult } from '../../components/AnalysisResult';
 import DividendAnalysis from '../../services/DividendAnalysis';
 import DividendAnalysisResult from '../../services/DividendAnalysisResult';
 
-const NavigationToHome = () => {
-    navigation.navigate('Home');
-};
-
-export default function AnalysisResultPage({ route }) {
-    const { dataToAnalysis } = route.params;
+export default function AnalysisResultPage({ navigation, route }) {
+    const [dataToAnalysis, setSataToAnalysis] = useState(
+        route.params.dataToAnalysis
+    );
     const [reportDate, setReportDate] = useState(new Date());
+
+    const NavigationToHome = () => {
+        navigation.navigate('Home');
+    };
 
     const saveDividendAnalysisResult = () => {
         //Primeiro cria o dado na tabela agrupador, depois o dados na tabela de baixo
         let successSaveMessage = 'Os dados foram salvos com sucesso';
-        let errorSaveMessage = 'Não foi possível salvar os dados da análise';
 
         if (dataToAnalysis != null && dataToAnalysis != undefined) {
             dataToAnalysis.map((d) =>
@@ -39,17 +40,28 @@ export default function AnalysisResultPage({ route }) {
                                         responseDAR != undefined
                                     ) {
                                         alert(successSaveMessage);
-                                        //() => NavigationToHome(props);
+                                        NavigationToHome();
                                     } else {
-                                        alert(errorSaveMessage);
+                                        alert('error');
                                     }
                                 })
-                                .catch(() => alert(errorSaveMessage));
+                                .catch((e) => console.log(e));
                         }
                     })
-                    .catch(() => alert(errorSaveMessage))
+                    .catch((e) => alert(e))
             );
         }
+
+        /*DividendAnalysis.find(1)
+            .then(function (result) {
+                console.log('\nDividendAnalysis =>', result);
+            })
+            .catch(() => alert('Dado não encontrado!'));
+        DividendAnalysisResult.find(1)
+            .then(function (result) {
+                console.log('DividendAnalysisResult=> ', result);
+            })
+            .catch(() => alert('Dado não encontrado!'));*/
     };
 
     return (
@@ -68,9 +80,7 @@ export default function AnalysisResultPage({ route }) {
                     <ContainerSpaceBottom />
                 </ScrollView>
                 <Container>
-                    <ButtonSubmit
-                        onPress={() => saveDividendAnalysisResult(props)}
-                    >
+                    <ButtonSubmit onPress={() => saveDividendAnalysisResult()}>
                         <TextButton>Finalizar análise</TextButton>
                     </ButtonSubmit>
                 </Container>
