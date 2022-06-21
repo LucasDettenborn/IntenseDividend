@@ -10,6 +10,7 @@ import { AnalysisResult } from '../../components/AnalysisResult';
 import HeaderWithSearch from '../../components/HeaderWithSearch';
 import DividendAnalysis from '../../services/DividendAnalysis';
 import DividendAnalysisResult from '../../services/DividendAnalysisResult';
+import moment from 'moment';
 
 const NavigationToNewAnalysis = (props) => {
     props.navigation.navigate('NewAnalysis');
@@ -80,26 +81,33 @@ const Home = (props) => {
         // }
     }, [dataFromDividendAnalysisResult]);
 
+    const [search, setSearch] = useState('');
+
     return (
         <>
             <KeyboardView
                 behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
             >
                 <Container>
-                    <HeaderWithSearch></HeaderWithSearch>
+                    <HeaderWithSearch setdata={setSearch}></HeaderWithSearch>
                 </Container>
                 <ScrollView>
                     {dataFromDividendAnalysis.length > 0 &&
                     dataFromDividendAnalysisResult.length > 0 ? (
                         dataFromDividendAnalysis.map((d) =>
-                            dataFromDividendAnalysisResult.map(function (d2) {
-                                console.log('\n\n\n\nd =>', d);
-                                console.log('\n\n\n\nd2 =>', d2);
-                                console.log('\n');
-                                <AnalysisResult
-                                    dateReport={d.reportDate}
-                                    data={d2}
-                                />;
+                            dataFromDividendAnalysisResult.map((d2) => {
+                                var o = moment(
+                                    d[0].reportDate,
+                                    'DD/MM/YYYY HH:mm:ss'
+                                ).format('DD-MM-YYYY');
+                                if (search == '' || o.includes(search)) {
+                                    return (
+                                        <AnalysisResult
+                                            dateReport={d[0].reportDate}
+                                            data={d2[0]}
+                                        />
+                                    );
+                                }
                             })
                         )
                     ) : (
