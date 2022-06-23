@@ -90,6 +90,7 @@ function AnalysisData({ removeItem, data }) {
     return (
         <>
             <ContainerAround
+                key={data.key}
                 style={{
                     shadowColor: '#000000',
                     shadowOpacity: 0.8,

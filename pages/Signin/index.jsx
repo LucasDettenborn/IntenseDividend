@@ -42,8 +42,7 @@ const Signin = (props) => {
             //É necessário aumentar o then para quando logar setar a meta em dividend do usuário
             Users.findUserByLoginAndPassword({ email, password })
                 .then(function (o) {
-                    console.log('\no.dividendGoal => ', o.dividendGoal);
-                    //UserContext.setDividendUserGoal(o.dividendGoal);
+                    UserContext.userDividenGoal = o.dividendGoal;
                     NavigationToHome(props);
                 })
                 .catch(() => alert('Usuário não encontrado!'));

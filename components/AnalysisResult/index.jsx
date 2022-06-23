@@ -16,11 +16,19 @@ import {
     ContainerHeaderCol2,
 } from './styles';
 import CalendarIcon from '../../assets/event_black_24dp.png';
+import Likert1 from '../../assets/likert_0.png';
+import Likert2 from '../../assets/likert_1.png';
+import Likert3 from '../../assets/likert_2.png';
+import Likert4 from '../../assets/likert_3.png';
+import Likert5 from '../../assets/likert_4.png';
 import Helper from '../../util/Helper';
+import UserContext from '../../util/UserContext';
 import moment from 'moment';
 
-function AnalysisResult({ dateReport, data }) {
-    const [targetDividendFromUser, setTargetDividendFromUser] = useState(6);
+function AnalysisResult({ dateReport, data, id }) {
+    const [targetDividendFromUser, setTargetDividendFromUser] = useState(
+        UserContext.userDividenGoal
+    );
     const [dividendValuation, setDividendValuation] = useState(
         data.dividendValuation
     );
@@ -71,9 +79,38 @@ function AnalysisResult({ dateReport, data }) {
         setisCalculatedScoreFromRecomendationSystem(true);
     };
 
+    const ChooseLikertLevel = () => {
+        if (
+            data.symbol != null &&
+            scoreFromRecomendationSystem != null &&
+            scoreFromRecomendationSystem != undefined
+        ) {
+            if (scoreFromRecomendationSystem <= 1) return Likert1;
+            else if (
+                scoreFromRecomendationSystem > 1 &&
+                scoreFromRecomendationSystem <= 2
+            )
+                return Likert2;
+            else if (
+                scoreFromRecomendationSystem > 2 &&
+                scoreFromRecomendationSystem <= 3
+            )
+                return Likert3;
+            else if (
+                scoreFromRecomendationSystem > 3 &&
+                scoreFromRecomendationSystem <= 4
+            )
+                return Likert4;
+            else return Likert5;
+        } else {
+            return Likert1;
+        }
+    };
+
     return (
         <>
             <ContainerAround
+                key={id}
                 style={{
                     shadowColor: '#000000',
                     shadowOpacity: 0.8,
@@ -131,8 +168,17 @@ function AnalysisResult({ dateReport, data }) {
                             <>
                                 <ContainerHeaderCol1 style={{ height: 'auto' }}>
                                     <TextAfterHeader style={{ fontSize: 15 }}>
-                                        {data.symbol}
+                                        {data.symbol.replace('.SA', '')}
                                     </TextAfterHeader>
+                                    <Image
+                                        style={{
+                                            width: '100%',
+                                            height: '90%',
+                                            flex: 1,
+                                            resizeMode: 'contain',
+                                        }}
+                                        source={ChooseLikertLevel()}
+                                    />
                                 </ContainerHeaderCol1>
                                 <ContainerHeaderCol2 style={{ height: 'auto' }}>
                                     <TextAfterHeader>
@@ -175,4 +221,4 @@ function AnalysisResult({ dateReport, data }) {
     );
 }
 
-export { AnalysisResult };
+export default AnalysisResult;

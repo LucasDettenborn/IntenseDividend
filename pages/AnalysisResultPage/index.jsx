@@ -7,7 +7,7 @@ import {
     ButtonSubmit,
     TextButton,
 } from './styles';
-import { AnalysisResult } from '../../components/AnalysisResult';
+import AnalysisResult from '../../components/AnalysisResult';
 import DividendAnalysis from '../../services/DividendAnalysis';
 import DividendAnalysisResult from '../../services/DividendAnalysisResult';
 
@@ -15,7 +15,7 @@ export default function AnalysisResultPage({ navigation, route }) {
     console.log(' route.params.dataToAnalysis ', route.params.dataToAnalysis);
 
     const [dataToAnalysis, setSataToAnalysis] = useState(
-        route.params.dataToAnalysis
+        route.params?.dataToAnalysis
     );
     const [reportDate, setReportDate] = useState(new Date());
 
@@ -53,17 +53,6 @@ export default function AnalysisResultPage({ navigation, route }) {
                     .catch((e) => alert(e))
             );
         }
-
-        /*DividendAnalysis.find(1)
-            .then(function (result) {
-                console.log('\nDividendAnalysis =>', result);
-            })
-            .catch(() => alert('Dado não encontrado!'));
-        DividendAnalysisResult.find(1)
-            .then(function (result) {
-                console.log('DividendAnalysisResult=> ', result);
-            })
-            .catch(() => alert('Dado não encontrado!'));*/
     };
 
     return (
@@ -74,7 +63,11 @@ export default function AnalysisResultPage({ navigation, route }) {
                 <ScrollView>
                     {dataToAnalysis != null && reportDate != null ? (
                         dataToAnalysis.map((d) => (
-                            <AnalysisResult dateReport={reportDate} data={d} />
+                            <AnalysisResult
+                                dateReport={reportDate}
+                                data={d}
+                                key={d.key}
+                            />
                         ))
                     ) : (
                         <TextButton>Não tem dados a ser carregado</TextButton>

@@ -22,6 +22,9 @@ export const Container = styled.View`
 
 export const ContainerHeaderCol1 = styled.View`
     flex: 0.5;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 `;
 export const ContainerHeaderCol2 = styled.View`
     flex: 1;

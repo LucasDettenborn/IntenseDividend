@@ -118,7 +118,7 @@ const all = () => {
         db.transaction((tx) => {
             //comando SQL modificável
             tx.executeSql(
-                `SELECT * FROM ${table};`,
+                `SELECT ${table}.*, DividendAnalysis.reportDate FROM ${table} inner join DividendAnalysis on DividendAnalysis.id = DividendAnalysisResult.dividendAnalysis_id;`,
                 [],
                 //-----------------------
                 (_, { rows }) => resolve(rows._array),

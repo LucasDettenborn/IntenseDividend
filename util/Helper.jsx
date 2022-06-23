@@ -1,6 +1,5 @@
 const dividendYieldConvertWeight = (dy) => {
     dy = parseFloat(dy);
-    console.log(dy);
     if (dy != null && dy != undefined) {
         if (dy <= 2) return 1;
         else if (dy > 2 && dy <= 3.5) return 2;
@@ -14,7 +13,6 @@ const dividendYieldConvertWeight = (dy) => {
 
 const payOutConvertWeight = (py) => {
     py = parseInt(py);
-    console.log(py);
     if (py != null && py != undefined) {
         if (py <= 55) return 5;
         else if (py > 55 && py <= 65) return 4;
@@ -28,7 +26,6 @@ const payOutConvertWeight = (py) => {
 
 const dividendValuationConvertWeight = (dv) => {
     dv = parseFloat(dv);
-    console.log(dv);
     if (dv != null && dv != undefined) {
         if (dv <= -5 && dv <= -2) return 1;
         else if (dv > -2 && dv <= -1) return 2;

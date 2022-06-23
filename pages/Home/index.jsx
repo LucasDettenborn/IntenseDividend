@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import {
     KeyboardView,
     ScrollView,
@@ -6,9 +6,8 @@ import {
     ButtonSubmit,
     TextButton,
 } from './styles';
-import { AnalysisResult } from '../../components/AnalysisResult';
+import AnalysisResult from '../../components/AnalysisResult';
 import HeaderWithSearch from '../../components/HeaderWithSearch';
-import DividendAnalysis from '../../services/DividendAnalysis';
 import DividendAnalysisResult from '../../services/DividendAnalysisResult';
 import moment from 'moment';
 
@@ -17,16 +16,6 @@ const NavigationToNewAnalysis = (props) => {
 };
 
 const Home = (props) => {
-    const loadDataFromDividendAnalysis = () => {
-        DividendAnalysis.all()
-            .then(function (o) {
-                setDataFromDividendAnalysis([...dataFromDividendAnalysis, o]);
-            })
-            .catch(
-                'Não foi possível carregar os dados da tabela DividendAnalysis'
-            );
-    };
-
     const loadDataFromDividendAnalysisResult = () => {
         DividendAnalysisResult.all()
             .then(function (o) {
@@ -34,28 +23,19 @@ const Home = (props) => {
                     ...dataFromDividendAnalysisResult,
                     o,
                 ]);
+                setDataFromDividendAnalysisResultIsLoaded(true);
             })
             .catch(
                 'Não foi possível carregar os dados da tabela DividendAnalysisResult'
             );
     };
 
-    const [dataFromDividendAnalysis, setDataFromDividendAnalysis] = useState(
-        []
-    );
     const [dataFromDividendAnalysisResult, setDataFromDividendAnalysisResult] =
         useState([]);
-
-    useEffect(() => {
-        if (
-            dataFromDividendAnalysis == null ||
-            dataFromDividendAnalysis.length == 0
-        ) {
-            loadDataFromDividendAnalysis();
-        }
-
-        console.log('dataFromDividendAnalysis=>  ', dataFromDividendAnalysis);
-    }, [dataFromDividendAnalysis]);
+    const [
+        dataFromDividendAnalysisResultIsIsLoaded,
+        setDataFromDividendAnalysisResultIsLoaded,
+    ] = useState(false);
 
     useEffect(() => {
         if (
@@ -82,35 +62,22 @@ const Home = (props) => {
                 behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
             >
                 <ScrollView>
-                    {console.log(
-                        '\n\ndataFromDividendAnalysis.length=> ',
-                        dataFromDividendAnalysis[0].length
-                    )}
-                    {console.log(
-                        '\n\ndataFromDividendAnalysisResult.length=> ',
-                        dataFromDividendAnalysisResult[0].length
-                    )}
-                    {dataFromDividendAnalysis[0] != null &&
-                    dataFromDividendAnalysis[0].length > 1 &&
-                    dataFromDividendAnalysisResult[0] != null &&
-                    dataFromDividendAnalysisResult[0].length > 1 ? (
-                        dataFromDividendAnalysis[0].map((d) =>
-                            dataFromDividendAnalysisResult[0].map((d2) => {
-                                console.log('aqui =======');
-                                var o = moment(
-                                    d.reportDate,
-                                    'DD/MM/YYYY HH:mm:ss'
-                                ).format('DD-MM-YYYY');
-                                if (search == '' || o.includes(search)) {
-                                    return (
-                                        <AnalysisResult
-                                            dateReport={d.reportDate}
-                                            data={d2}
-                                        />
-                                    );
-                                }
-                            })
-                        )
+                    {dataFromDividendAnalysisResultIsIsLoaded == true ? (
+                        dataFromDividendAnalysisResult[0].map((d2) => {
+                            var o = moment(
+                                d2.reportDate,
+                                'DD/MM/YYYY HH:mm:ss'
+                            ).format('DD-MM-YYYY');
+                            if (search == '' || o.includes(search)) {
+                                return (
+                                    <AnalysisResult
+                                        dateReport={d2.reportDate}
+                                        data={d2}
+                                        id={d2.id}
+                                    />
+                                );
+                            }
+                        })
                     ) : (
                         <TextButton>Não tem dados a ser carregado</TextButton>
                     )}
