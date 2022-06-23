@@ -53,13 +53,8 @@ const Home = (props) => {
         ) {
             loadDataFromDividendAnalysis();
         }
-        // else {
-        //     console.log('dataFromDividendAnalysis', dataFromDividendAnalysis);
-        //     console.log(
-        //         'dataFromDividendAnalysis.length ',
-        //         dataFromDividendAnalysis.length
-        //     );
-        // }
+
+        console.log('dataFromDividendAnalysis=>  ', dataFromDividendAnalysis);
     }, [dataFromDividendAnalysis]);
 
     useEffect(() => {
@@ -69,42 +64,48 @@ const Home = (props) => {
         ) {
             loadDataFromDividendAnalysisResult();
         }
-        // else {
-        //     console.log(
-        //         'dataFromDividendAnalysisResult',
-        //         dataFromDividendAnalysisResult
-        //     );
-        //     console.log(
-        //         'dataFromDividendAnalysisResult.lengt ',
-        //         dataFromDividendAnalysisResult.length
-        //     );
-        // }
+
+        console.log(
+            '\ndataFromDividendAnalysisResult=>  ',
+            dataFromDividendAnalysisResult
+        );
     }, [dataFromDividendAnalysisResult]);
 
     const [search, setSearch] = useState('');
 
     return (
         <>
+            <Container>
+                <HeaderWithSearch setdata={setSearch}></HeaderWithSearch>
+            </Container>
             <KeyboardView
                 behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
             >
-                <Container>
-                    <HeaderWithSearch setdata={setSearch}></HeaderWithSearch>
-                </Container>
                 <ScrollView>
-                    {dataFromDividendAnalysis.length > 0 &&
-                    dataFromDividendAnalysisResult.length > 0 ? (
-                        dataFromDividendAnalysis.map((d) =>
-                            dataFromDividendAnalysisResult.map((d2) => {
+                    {console.log(
+                        '\n\ndataFromDividendAnalysis.length=> ',
+                        dataFromDividendAnalysis[0].length
+                    )}
+                    {console.log(
+                        '\n\ndataFromDividendAnalysisResult.length=> ',
+                        dataFromDividendAnalysisResult[0].length
+                    )}
+                    {dataFromDividendAnalysis[0] != null &&
+                    dataFromDividendAnalysis[0].length > 1 &&
+                    dataFromDividendAnalysisResult[0] != null &&
+                    dataFromDividendAnalysisResult[0].length > 1 ? (
+                        dataFromDividendAnalysis[0].map((d) =>
+                            dataFromDividendAnalysisResult[0].map((d2) => {
+                                console.log('aqui =======');
                                 var o = moment(
-                                    d[0].reportDate,
+                                    d.reportDate,
                                     'DD/MM/YYYY HH:mm:ss'
                                 ).format('DD-MM-YYYY');
                                 if (search == '' || o.includes(search)) {
                                     return (
                                         <AnalysisResult
-                                            dateReport={d[0].reportDate}
-                                            data={d2[0]}
+                                            dateReport={d.reportDate}
+                                            data={d2}
                                         />
                                     );
                                 }

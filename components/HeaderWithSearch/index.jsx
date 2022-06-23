@@ -30,7 +30,7 @@ function HeaderWithSearch({ setdata }) {
             <Row1>
                 <ContainerSearch>
                     <InputSearch
-                        placeholder="Ticket de negociação"
+                        placeholder="Pesquise pela data de relatório"
                         placeholderTextColor="#C4C4C4"
                         onChangeText={(e) => setdata(e)}
                     ></InputSearch>

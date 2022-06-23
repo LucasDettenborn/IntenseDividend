@@ -1,15 +1,20 @@
-import { useState } from 'react';
+const userDividenGoal = null;
 
-const [userDividenGoal, setUserDividenGoal] = useState(null);
-
-const getDividendUserGoal = (dividendGoal) => {
+const getDividendUserGoal = () => {
     if (userDividenGoal == null) {
-        setUserDividenGoal(dividendGoal);
+        null;
     } else {
         userDividenGoal;
     }
 };
 
+const setDividendUserGoal = (dividendGoal) => {
+    if (userDividenGoal == null) {
+        userDividenGoal = dividendGoal;
+    }
+};
+
 export default {
     getDividendUserGoal,
+    setDividendUserGoal,
 };

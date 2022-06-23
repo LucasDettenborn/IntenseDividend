@@ -13,6 +13,7 @@ import AnalysisResultPage from './pages/AnalysisResultPage';
 import PreSignin from './pages/PreSignin';
 import RegisterAccount from './pages/RegisterAccount';
 import DatabaseInit from './database/database-init';
+import './IgnoreWarnings';
 
 const Stack = createNativeStackNavigator();
 

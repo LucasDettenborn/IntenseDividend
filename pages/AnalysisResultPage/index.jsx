@@ -12,6 +12,8 @@ import DividendAnalysis from '../../services/DividendAnalysis';
 import DividendAnalysisResult from '../../services/DividendAnalysisResult';
 
 export default function AnalysisResultPage({ navigation, route }) {
+    console.log(' route.params.dataToAnalysis ', route.params.dataToAnalysis);
+
     const [dataToAnalysis, setSataToAnalysis] = useState(
         route.params.dataToAnalysis
     );

@@ -26,6 +26,10 @@ function AnalysisResult({ dateReport, data }) {
     );
     const [scoreFromRecomendationSystem, setScoreFromRecomendationSystem] =
         useState(data.scoreFromRecomendationSystem);
+    const [
+        isCalculatedScoreFromRecomendationSystem,
+        setisCalculatedScoreFromRecomendationSystem,
+    ] = useState(false);
 
     useEffect(() => {
         data.dividendValuation = dividendValuation;
@@ -46,18 +50,25 @@ function AnalysisResult({ dateReport, data }) {
             5;
         //Deve-se dividir a média pelo alvo requirido no cadastro do usuário * 100
         setDividendValuation(
-            ((average / targetDividendFromUser) * 100).toFixed(2)
+            (
+                (average / targetDividendFromUser) * 100 -
+                data.regularMarketPrice
+            ).toFixed(2)
         );
     };
 
     const MathScoreRecommendationSystem = (dy, py, dv) => {
         //Aplicar aqui o que está no Excel
+
         let dyWeight = parseFloat(Helper.dividendYieldConvertWeight(dy)) * 0.15;
         let pyWeight = parseInt(Helper.payOutConvertWeight(py)) * 0.05;
         let divValuationWeight =
             Helper.dividendValuationConvertWeight(dv) * 0.8;
+
         let result = dyWeight + pyWeight + divValuationWeight;
+
         setScoreFromRecomendationSystem(result.toFixed(2));
+        setisCalculatedScoreFromRecomendationSystem(true);
     };
 
     return (
@@ -143,8 +154,10 @@ function AnalysisResult({ dateReport, data }) {
                                             : dividendValuation}
                                     </TextAfterHeader>
                                     <TextAfterHeader>
-                                        {dividendValuation > 0 &&
-                                        scoreFromRecomendationSystem == 0
+                                        {dividendValuation != 0 &&
+                                        scoreFromRecomendationSystem == 0 &&
+                                        isCalculatedScoreFromRecomendationSystem ==
+                                            false
                                             ? MathScoreRecommendationSystem(
                                                   data.dy,
                                                   data.py,

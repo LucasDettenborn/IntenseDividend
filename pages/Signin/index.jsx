@@ -14,6 +14,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Header from '../../components/Header';
 import Password from '../../components/Input/Password';
 import Users from '../../services/Users';
+import UserContext from '../../util/UserContext';
 
 const NavigationToRegisterAccount = (props) => {
     props.navigation.navigate('RegisterAccount');
@@ -40,7 +41,11 @@ const Signin = (props) => {
         ) {
             //É necessário aumentar o then para quando logar setar a meta em dividend do usuário
             Users.findUserByLoginAndPassword({ email, password })
-                .then(() => NavigationToHome(props))
+                .then(function (o) {
+                    console.log('\no.dividendGoal => ', o.dividendGoal);
+                    //UserContext.setDividendUserGoal(o.dividendGoal);
+                    NavigationToHome(props);
+                })
                 .catch(() => alert('Usuário não encontrado!'));
         }
     };

@@ -1,7 +1,11 @@
 {
   "expo": {
-    "name": "intenseDividend",
-    "slug": "intenseDividend",
+    "name": "Intense Dividend",
+    "slug": "IntenseDividend",
+    "platforms":[
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,13 +21,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lucas.intensedividend"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.lucas.intensedividend"
     },
     "web": {
       "favicon": "./assets/favicon.png"
